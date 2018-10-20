@@ -7,7 +7,7 @@ module.exports = function(content) {
 
   const userOptions = loaderUtils.getOptions(this) || {};
   const defaultOptions = {
-    path: '.',
+    path: process.cwd(),
     context: {}
   };
 
