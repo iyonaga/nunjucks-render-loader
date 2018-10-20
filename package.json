@@ -1,6 +1,6 @@
 {
   "name": "nunjucks-render-loader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "nunjucks template loader module for webpack",
   "main": "index.js",
   "repository": "https://github.com/iyonaga/nunjucks-render-loader.git",
