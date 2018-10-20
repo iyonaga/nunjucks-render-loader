@@ -1,18 +1,27 @@
 const loaderUtils = require('loader-utils');
 const nunjucks = require('nunjucks');
+const _ = require('lodash');
 
 module.exports = function(content) {
   this.cacheable && this.cacheable();
 
   const userOptions = loaderUtils.getOptions(this) || {};
-  const defaultOptions = {};
-  const options = Object.assign(defaultOptions, userOptions);
+  const defaultOptions = {
+    path: '.',
+    context: {}
+  };
 
-  const env = nunjucks.configure(options.path, options.envOptions);
+  const options = Object.assign(defaultOptions, userOptions);
 
   this.addContextDependency(options.path);
 
-  const result = env.renderString(content);
+  const env = nunjucks.configure(options.path, options.envOptions);
+  const templateString = env.renderString(content, options.context);
 
-  return 'module.exports = ' + JSON.stringify(result);
+  // compile for HTML Webpack Plugin
+  const result = _.template(templateString);
+
+  return `
+    module.exports = ${result}
+  `;
 };
